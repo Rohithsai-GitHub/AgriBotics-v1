@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Crop Prediction</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="prediction-form">
+                <form id="predictionForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nitrogen" class="form-label">Nitrogen (N) Content</label>
+                            <input type="number" class="form-control" id="nitrogen" required step="0.01" min="0" max="140">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="phosphorus" class="form-label">Phosphorus (P) Content</label>
+                            <input type="number" class="form-control" id="phosphorus" required step="0.01" min="0" max="145">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="potassium" class="form-label">Potassium (K) Content</label>
+                            <input type="number" class="form-control" id="potassium" required step="0.01" min="0" max="205">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="temperature" class="form-label">Temperature (°C)</label>
+                            <input type="number" class="form-control" id="temperature" required step="0.01" min="0" max="50">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="humidity" class="form-label">Humidity (%)</label>
+                            <input type="number" class="form-control" id="humidity" required step="0.01" min="0" max="100">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ph" class="form-label">pH Level</label>
+                            <input type="number" class="form-control" id="ph" required step="0.01" min="0" max="14">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="rainfall" class="form-label">Rainfall (mm)</label>
+                            <input type="number" class="form-control" id="rainfall" required step="0.01" min="0" max="300">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Get Prediction</button>
+                </form>
+
+                <div class="loading-spinner text-center mt-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h4>Prediction Result</h4>
+                    <p id="predictionResult"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Input Guidelines</h5>
+                    <ul class="list-unstyled">
+                        <li>Nitrogen: 0-140 kg/ha</li>
+                        <li>Phosphorus: 0-145 kg/ha</li>
+                        <li>Potassium: 0-205 kg/ha</li>
+                        <li>Temperature: 0-50°C</li>
+                        <li>Humidity: 0-100%</li>
+                        <li>pH: 0-14</li>
+                        <li>Rainfall: 0-300mm</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/prediction.js') }}"></script>
+{% endblock %}

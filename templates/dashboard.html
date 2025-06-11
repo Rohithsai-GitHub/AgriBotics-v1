@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Welcome to Your Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Weather Forecast</h5>
+                    <div class="weather-section">
+                        <form id="weatherForm" class="mb-3">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="city" placeholder="Enter city name" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary w-100">Get Weather Forecast</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="weatherInfo" class="d-none">
+                            <div class="row" id="forecastContainer">
+                                <!-- Forecast cards will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Crop Recommendation</h5>
+                    <p class="card-text">Get started with crop predictions</p>
+                    <a href="{{ url_for('prediction') }}" class="btn btn-primary">Make Prediction</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Latest Updates</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✨ New soil analysis features added</li>
+                        <li class="mb-2">📊 Enhanced prediction accuracy</li>
+                        <li>🌱 Updated crop database</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Weed Detection</h5>
+                    <p class="card-text">Identify and locate weeds in your field</p>
+                    <a href="{{ url_for('weed_detection') }}" class="btn btn-primary">Detect Weeds</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Plant Disease Detection</h5>
+                    <p class="card-text">Detect and identify plant diseases using AI technology.</p>
+                    <a href="{{ url_for('disease_detection') }}" class="btn btn-primary">Detect Disease</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Yield Prediction</h5>
+                    <p class="card-text">Predict crop yields based on environmental factors.</p>
+                    <a href="{{ url_for('yield_prediction') }}" class="btn btn-primary">Predict Yield</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Featured Crops</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <img src="https://images.unsplash.com/photo-1530267981375-f0de937f5f13" class="img-fluid rounded" alt="Crop 1">
+                            <p class="mt-2">Rice Cultivation</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://images.pexels.com/photos/326082/pexels-photo-326082.jpeg" class="img-fluid rounded" alt="Crop 2">
+                            <p class="mt-2">Wheat Farming</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <img src="https://images.unsplash.com/photo-1527762031550-522c5d9240fd" class="img-fluid rounded" alt="Crop 3">
+                            <p class="mt-2">Cotton Fields</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

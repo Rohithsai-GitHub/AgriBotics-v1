@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Weed Detection</h3>
+                    
+                    <form id="weed-detection-form">
+                        <div class="mb-3">
+                            <label for="field-image" class="form-label">Upload Field Image</label>
+                            <input type="file" class="form-control" id="field-image" name="plant-image" accept="image/*" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Detect Weeds</button>
+                        </div>
+                    </form>
+
+                    <div id="result" class="mt-4" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img id="preview-image" class="img-fluid rounded" alt="Uploaded field image">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Detection Results</h5>
+                                        <p><strong>Weeds Detected:</strong> <span id="weed-count"></span></p>
+                                        <div id="weed-locations"></div>
+                                        <hr>
+                                        <div class="alert alert-info" role="alert">
+                                            <h6 class="alert-heading">Recommendations:</h6>
+                                            <div id="recommendations"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="loading" class="text-center mt-4" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('weed-detection-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const formData = new FormData();
+    const fileInput = document.getElementById('field-image');
+    formData.append('plant-image', fileInput.files[0]);
+
+    // Show loading spinner
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('result').style.display = 'none';
+
+    fetch('/detect-weeds', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Update image preview
+            document.getElementById('preview-image').src = '/' + data.image_path;
+            
+            // Update weed count
+            document.getElementById('weed-count').textContent = data.weed_data.count;
+            
+            // Display weed locations
+            const locationsHtml = data.weed_data.detections.map((detection, index) => 
+                `<p>Weed ${index + 1}: ${detection.confidence}% confidence at (${detection.location.x}, ${detection.location.y})</p>`
+            ).join('');
+            document.getElementById('weed-locations').innerHTML = locationsHtml;
+            
+            // Update recommendations
+            document.getElementById('recommendations').textContent = data.weed_data.recommendations;
+            
+            // Show results
+            document.getElementById('result').style.display = 'block';
+        } else {
+            throw new Error(data.error || 'Detection failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error processing image: ' + error.message);
+    })
+    .finally(() => {
+        document.getElementById('loading').style.display = 'none';
+    });
+});
+</script>
+{% endblock %}

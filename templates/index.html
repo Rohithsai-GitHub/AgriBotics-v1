@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 mb-4">Smart Crop Recommendations</h1>
+        <p class="lead mb-4">Get AI-powered recommendations for optimal crop selection based on your soil conditions</p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('signup') }}" class="btn btn-light btn-lg">Get Started</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="features py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose CropSmart?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1528839390497-a161db4bac71" class="img-fluid mb-3" alt="AI Technology">
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Advanced machine learning algorithms analyze soil conditions for accurate predictions</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1517840933437-c41356892b35" class="img-fluid mb-3" alt="Personalized Recommendations">
+                    <h3>Personalized Insights</h3>
+                    <p>Get tailored recommendations based on your specific soil parameters</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1516234137022-7d61576807db" class="img-fluid mb-3" alt="Easy to Use">
+                    <h3>Easy to Use</h3>
+                    <p>Simple interface to input your data and get instant recommendations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
